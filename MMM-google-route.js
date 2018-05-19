@@ -84,9 +84,13 @@ Module.register("MMM-google-route", {
             directionsDisplay1.setMap(map);
 
             function getDirections(){
+                var dr = self.config.directionsRequest;
+                if(!dr.travelMode)
+                    dr.travelMode="DRIVING";
+                if(dr.provideRouteAlternatives===undefined)
+                    dr.provideRouteAlternatives=true;
                 directionsService.route(
-                    self.config.directionsRequest
-                    , 
+                    dr, 
                     function(response, status) {
                         if (status === 'OK') {                           
                             directionsDisplay1.setDirections(response);
