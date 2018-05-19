@@ -15,11 +15,23 @@ Module.register("MMM-google-route", {
     },
 
     getDom: function () {
+        var main = document.createElement("div");
+        main.style.height = this.config.height;
+        main.style.width = this.config.width;
+
         var wrapper = document.createElement("div");
         wrapper.setAttribute("id", "map");
+        wrapper.style.height="90%";
+        wrapper.style.width="100%";
+        var info = document.createElement("div");
+        info.setAttribute("id", "info");
+        info.style.height="10%";
+        wrapper.style.width="100%";
+        info.innerHTML="Placehoder";
 
-        wrapper.style.height = this.config.height;
-        wrapper.style.width = this.config.width;
+        main.appendChild(wrapper);
+        main.appendChild(info);
+
 
         var script = document.createElement("script");
         script.type = "text/javascript";
@@ -60,10 +72,11 @@ Module.register("MMM-google-route", {
                     } else {
                         console.error('Directions request failed due to ' + status);
                     }
-                });
+                }
+            );
         };
 
-        return wrapper;
+        return main;
     }
 
 });
