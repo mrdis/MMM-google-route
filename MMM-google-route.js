@@ -30,6 +30,7 @@ Module.register("MMM-google-route", {
         wrapper.setAttribute("id", "map");
         wrapper.style.height="90%";
         wrapper.style.width="100%";
+        wrapper.style.display = "hidden";
 
         var info = document.createElement("div");
         info.style.height="10%";
@@ -83,6 +84,7 @@ Module.register("MMM-google-route", {
                         directionsDisplay1.setRouteIndex(1);
                         addInfo(response,0);
                         addInfo(response,1);
+                        wrapper.style.display="block";
                     } else {
                         console.error('Directions request failed due to ' + status);
                     }
