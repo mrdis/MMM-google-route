@@ -4,6 +4,7 @@ Module.register("MMM-google-route", {
         key: 'apy_key',
         height: '300px',
         width: '300px',
+        title: '',
         mapOptions:{},
         directionsRequest:{}
     },
@@ -19,6 +20,11 @@ Module.register("MMM-google-route", {
         main.style.height = this.config.height;
         main.style.width = this.config.width;
 
+        var title = document.createElement("div");
+        title.setAttribute("id", "title");
+        title.style.height="10%";
+        title.style.width="100%";
+        title.innerHTML=this.config.title;
         var wrapper = document.createElement("div");
         wrapper.setAttribute("id", "map");
         wrapper.style.height="90%";
@@ -26,9 +32,10 @@ Module.register("MMM-google-route", {
         var info = document.createElement("div");
         info.setAttribute("id", "info");
         info.style.height="10%";
-        wrapper.style.width="100%";
+        info.style.width="100%";
         info.innerHTML="Placehoder";
 
+        main.appendChild(title);
         main.appendChild(wrapper);
         main.appendChild(info);
 
