@@ -18,23 +18,20 @@ Module.register("MMM-google-route", {
 
     getDom: function () {
         var main = document.createElement("div");
-        main.style.height = this.config.height;
         main.style.width = this.config.width;
 
         var title = document.createElement("div");
         title.setAttribute("id", "title");
-        title.style.height="10%";
         title.style.width="100%";
         title.innerHTML=this.config.title;
 
         var wrapper = document.createElement("div");
         wrapper.setAttribute("id", "map");
-        wrapper.style.height="90%";
+        wrapper.style.height = this.config.height;
         wrapper.style.width="100%";
         wrapper.style.display = "hidden";
 
         var info = document.createElement("div");
-        info.style.height="10%";
         info.style.width="100%";
         var infoTable = document.createElement("table");
         infoTable.setAttribute("id", "info");
