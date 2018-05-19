@@ -4,7 +4,14 @@ Module.register("MMM-google-route", {
         key: 'apy_key',
         height: '300px',
         width: '300px',
+        mapOptions:{},
         directionsRequest:{}
+    },
+
+    getScripts: function() {
+        return [
+            this.file('map-styles.js')
+        ];
     },
 
     getDom: function () {
@@ -20,9 +27,11 @@ Module.register("MMM-google-route", {
         document.body.appendChild(script);
 
         var self = this;
-        script.onload = function () {            
+        script.onload = function () {
             var map = new google.maps.Map(document.getElementById("map"), {
+                styles:mmmGoogleRouteMapStyles
             });
+            map.setOptions(self.config.mapOptions);
             var directionsService = new google.maps.DirectionsService;
             var directionsDisplay0 = new google.maps.DirectionsRenderer({
                 suppressMarkers : true,
