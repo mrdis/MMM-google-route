@@ -81,10 +81,10 @@ Module.register("MMM-google-route", {
                     self.config.directionsRequest
                     , 
                     function(response, status) {
-                        if (status === 'OK') {
-                            directionsDisplay0.setDirections(response);
+                        if (status === 'OK') {                           
                             directionsDisplay1.setDirections(response);
                             directionsDisplay1.setRouteIndex(1);
+                            directionsDisplay0.setDirections(response);
                             clearInfo();
                             addInfo(response,0);
                             addInfo(response,1);
