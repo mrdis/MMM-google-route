@@ -5,6 +5,7 @@ Module.register("MMM-google-route", {
         height: '300px',
         width: '300px',
         title: '',
+        refreshPeriod: 1,
         mapOptions:{},
         directionsRequest:{}
     },
@@ -74,24 +75,39 @@ Module.register("MMM-google-route", {
             });
             directionsDisplay0.setMap(map);
             directionsDisplay1.setMap(map);
-            directionsService.route(
-                self.config.directionsRequest
-                , 
-                function(response, status) {
-                    if (status === 'OK') {
-                        directionsDisplay0.setDirections(response);
-                        directionsDisplay1.setDirections(response);
-                        directionsDisplay1.setRouteIndex(1);
-                        addInfo(response,0);
-                        addInfo(response,1);
-                        wrapper.style.display="block";
-                    } else {
-                        console.error('Directions request failed due to ' + status);
+
+            function getDirections(){
+                directionsService.route(
+                    self.config.directionsRequest
+                    , 
+                    function(response, status) {
+                        if (status === 'OK') {
+                            directionsDisplay0.setDirections(response);
+                            directionsDisplay1.setDirections(response);
+                            directionsDisplay1.setRouteIndex(1);
+                            clearInfo();
+                            addInfo(response,0);
+                            addInfo(response,1);
+                            this.updateDom(500);
+                            wrapper.style.display="block";
+
+                            // TODO display how old the information is
+                        } else {
+                            console.error('Directions request failed due to ' + status);
+                        }
                     }
-                }
-            );
+                );
+            }
+
+            getDirections();
+            setInterval( getDirections, 1000 * 60 * self.config.refreshPeriod );
         };
 
+
+        function clearInfo(){
+            var table = document.getElementById("info");
+            while(table.firstChild)table.removeChild(table.firstChild);
+        }
         function addInfo(response,index){
             if(response.routes.length<=index)return;
 
