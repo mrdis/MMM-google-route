@@ -15,7 +15,7 @@ And add the following configuration block to the modules array in the `config/co
 ```js
 var config = {
     modules: [
-        
+
         {
             module: 'MMM-google-route',
             position: 'top_left',
@@ -38,6 +38,7 @@ var config = {
 |--------------------- |-----------
 | `key`                | *Required* Google api key. See below for help.
 | `directionsRequest`  | *Required* The directions to show on the map. [google.maps.DirectionsRequest interface](https://developers.google.com/maps/documentation/javascript/reference/3/directions#DirectionsRequest)
+| `title`              | Optional title to show above the map.
 | `height`             | Height of the map. <br><br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `width`              | Width of the map. <br><br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `mapOptions`         | Map visualization options. [google.maps.MapOptions interface](https://developers.google.com/maps/documentation/javascript/reference/3/map#MapOptions) 
@@ -45,5 +46,5 @@ var config = {
 
 ## Google API Key
 
-Obtain an api at [Google Developer's page](https://developers.google.com/maps/documentation/javascript/).
+Obtain an api key at [Google Developer's page](https://developers.google.com/maps/documentation/javascript/).
 
