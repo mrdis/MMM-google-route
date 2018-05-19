@@ -55,7 +55,14 @@ Module.register("MMM-google-route", {
         var self = this;
         script.onload = function () {
             var map = new google.maps.Map(document.getElementById("map"), {
-                styles:mmmGoogleRouteMapStyles
+                styles:mmmGoogleRouteMapStyles,
+                zoomControl:false,
+                streetViewControl:false,
+                scaleControl:false,
+                rotateControl:false,
+                panControl:false,
+                mapTypeControl:false,
+                fullscreenControl:false
             });
             map.setOptions(self.config.mapOptions);
             var directionsService = new google.maps.DirectionsService;
