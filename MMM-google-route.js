@@ -25,19 +25,24 @@ Module.register("MMM-google-route", {
         title.style.height="10%";
         title.style.width="100%";
         title.innerHTML=this.config.title;
+
         var wrapper = document.createElement("div");
         wrapper.setAttribute("id", "map");
         wrapper.style.height="90%";
         wrapper.style.width="100%";
+
         var info = document.createElement("div");
-        info.setAttribute("id", "info");
         info.style.height="10%";
         info.style.width="100%";
-        info.innerHTML="Placehoder";
+        var infoTable = document.createElement("table");
+        infoTable.setAttribute("id", "info");
+        infoTable.style.height="100%";
+        infoTable.style.width="100%";
 
         main.appendChild(title);
         main.appendChild(wrapper);
         main.appendChild(info);
+        info.appendChild(infoTable);
 
 
         var script = document.createElement("script");
@@ -76,12 +81,40 @@ Module.register("MMM-google-route", {
                         directionsDisplay0.setDirections(response);
                         directionsDisplay1.setDirections(response);
                         directionsDisplay1.setRouteIndex(1);
+                        addInfo(response,0);
+                        addInfo(response,1);
                     } else {
                         console.error('Directions request failed due to ' + status);
                     }
                 }
             );
         };
+
+        function addInfo(response,index){
+            if(response.routes.length<=index)return;
+
+            var table = document.getElementById("info");
+            var tr = document.createElement("tr");
+            var summary = document.createElement("td");
+            var distance = document.createElement("td");
+            var duration = document.createElement("td");
+
+            if(index==0){
+                tr.classList.add("bright");
+            }
+
+            summary.classList.add("small");
+            distance.classList.add("small");
+
+            duration.innerHTML = response.routes[index].legs[0].duration.text;
+            distance.innerHTML = response.routes[index].legs[0].distance.text;
+            summary.innerHTML = response.routes[index].summary;
+
+            tr.appendChild(duration);
+            tr.appendChild(distance);
+            tr.appendChild(summary);
+            table.appendChild(tr);
+        }
 
         return main;
     }
