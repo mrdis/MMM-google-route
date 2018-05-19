@@ -88,7 +88,6 @@ Module.register("MMM-google-route", {
                             clearInfo();
                             addInfo(response,0);
                             addInfo(response,1);
-                            this.updateDom(500);
                             wrapper.style.display="block";
 
                             // TODO display how old the information is
