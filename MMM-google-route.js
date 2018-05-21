@@ -84,6 +84,20 @@ Module.register("MMM-google-route", {
                 var dr = self.config.directionsRequest;
                 if(!dr.travelMode)
                     dr.travelMode="DRIVING";
+                if(dr.travelMode=="DRIVING"){
+                    /* 
+                     * departureTime is required for directions to take traffic into account.
+                     * Also, it should be set to the current time or to a time in the future,
+                     * let's set it to 1 minute from now by default.
+                     */
+                    var defaultDepartureTime = new Date(Date.now()+60*1000);
+                    if(!dr.drivingOptions)
+                        dr.drivingOptions={};
+                    if(!dr.drivingOptions.departureTime)
+                        dr.drivingOptions.departureTime = defaultDepartureTime;
+                    if(dr.drivingOptions.departureTime < defaultDepartureTime)
+                        dr.drivingOptions.departureTime = defaultDepartureTime;
+                }
                 if(dr.provideRouteAlternatives===undefined)
                     dr.provideRouteAlternatives=true;
                 directionsService.route(
@@ -131,8 +145,12 @@ Module.register("MMM-google-route", {
             summary.classList.add("small");
             distance.classList.add("small");
 
-            duration.innerHTML = response.routes[index].legs[0].duration.text;
-            distance.innerHTML = response.routes[index].legs[0].distance.text;
+            var leg = response.routes[index].legs[0];
+            if(leg.duration_in_traffic)
+                duration.innerHTML = leg.duration_in_traffic.text;
+            else
+                duration.innerHTML = leg.duration.text;
+            distance.innerHTML = leg.distance.text;
             summary.innerHTML = response.routes[index].summary;
 
             tr.appendChild(duration);
