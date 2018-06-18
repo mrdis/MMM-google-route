@@ -43,15 +43,9 @@ Module.register("MMM-google-route", {
         main.appendChild(info);
         info.appendChild(infoTable);
 
-
-        var script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = "https://maps.googleapis.com/maps/api/js?key=" + this.config.key;
-        document.body.appendChild(script);
-
         var self = this;
-        script.onload = function () {
-            var map = new google.maps.Map(document.getElementById("map"), {
+        function mapsScriptLoaded() {
+            var map = new google.maps.Map(wrapper, {
                 styles:mmmGoogleRouteMapStyles,
                 zoomControl:false,
                 streetViewControl:false,
@@ -124,15 +118,42 @@ Module.register("MMM-google-route", {
             setInterval( getDirections, 1000 * 60 * self.config.refreshPeriod );
         };
 
+        function hasMapsScript(src){
+            for(s of document.scripts){
+                console.log(s.src);
+                if(s.src == src)return true;
+            }
+            return false;
+        }
+
+        function waitMapsScript(){
+            setTimeout(function(){
+                if(google && google.maps && google.maps.Map)
+                    mapsScriptLoaded();
+                else
+                    waitMapsScript();
+            },1000);
+        }
+
+        var mapsSrc = "https://maps.googleapis.com/maps/api/js?key=" + this.config.key;
+        if(! hasMapsScript(mapsSrc)){
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = mapsSrc;
+            document.body.appendChild(script);
+            script.onload = mapsScriptLoaded;
+        }else{
+            waitMapsScript();
+        }
 
         function clearInfo(){
-            var table = document.getElementById("info");
+            var table = infoTable;
             while(table.firstChild)table.removeChild(table.firstChild);
         }
         function addInfo(response,index){
             if(response.routes.length<=index)return;
 
-            var table = document.getElementById("info");
+            var table = infoTable;
             var tr = document.createElement("tr");
             var summary = document.createElement("td");
             var distance = document.createElement("td");
