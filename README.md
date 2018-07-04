@@ -42,6 +42,7 @@ var config = {
 | `height`             | Height of the map. <br><br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `width`              | Width of the map. <br><br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `useCalendarForDestination` | If enabled, directionsRequest will use the first calendar event with a location for the destination. <br><br>**Type:** `bool` <br> **Default value:** `false`
+| `calendarClass`      | The class of the calendar module to be used as the destination. Only takes effect if `useCalendarForDestination` is set to `true`. <br><br>**Type:** `string` <br> **Default value:** `calendar`
 | `refreshPeriod`      | Period between API requests.  <br><br>**Type:** `integer` (minutes) <br> **Default value:** `1`
 | `mapOptions`         | Map visualization options. [google.maps.MapOptions interface](https://developers.google.com/maps/documentation/javascript/reference/3/map#MapOptions) 
 
