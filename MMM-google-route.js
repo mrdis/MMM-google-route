@@ -81,8 +81,13 @@ Module.register("MMM-google-route", {
 
             function getDirections(){
                 var dr = self.config.directionsRequest;
-                if(self.config.useCalendarForDestination && this.firstEvent && this.firstEvent.geo)
-                    dr.destination = {lat: this.firstEvent.geo.lat, lng: this.firstEvent.geo.lon};
+                if(self.config.useCalendarForDestination && this.firstEvent)
+			if(this.firstEvent.geo){
+                    		dr.destination = {lat: this.firstEvent.geo.lat, lng: this.firstEvent.geo.lon};
+			} else if(this.firstEvent.location){
+				dr.destination = this.firstEvent.location;
+			}
+	    	}
                 if(!dr.travelMode)
                     dr.travelMode="DRIVING";
                 if(dr.travelMode=="DRIVING"){
