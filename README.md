@@ -41,6 +41,7 @@ var config = {
 | `title`              | Optional title to show above the map.
 | `height`             | Height of the map. <br><br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `width`              | Width of the map. <br><br>**Type:** `string` (pixels) <br> **Default value:** `300px`
+| `useCalendarForDestination` | If enabled, directionsRequest will use the first calendar event with a location for the destination. <br><br>**Type:** `bool` <br> **Default value:** `false`
 | `refreshPeriod`      | Period between API requests.  <br><br>**Type:** `integer` (minutes) <br> **Default value:** `1`
 | `mapOptions`         | Map visualization options. [google.maps.MapOptions interface](https://developers.google.com/maps/documentation/javascript/reference/3/map#MapOptions) 
 
