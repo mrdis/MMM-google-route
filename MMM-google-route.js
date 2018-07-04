@@ -7,6 +7,7 @@ Module.register("MMM-google-route", {
         title: '',
         refreshPeriod: 1,
         useCalendarForDestination: false,
+	calendarClass: "calendar",
         mapOptions:{},
         directionsRequest:{}
     },
