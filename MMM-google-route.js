@@ -12,7 +12,7 @@ Module.register("MMM-google-route", {
         directionsRequest:{}
     },
     
-    firstEvent: null,
+    firstEvent: false,
     
     getScripts: function() {
         return [
