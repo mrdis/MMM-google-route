@@ -42,6 +42,7 @@ var config = {
 | `height`             | Height of the map. <br><br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `width`              | Width of the map. <br><br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `refreshPeriod`      | Period between API requests.  <br><br>**Type:** `integer` (minutes) <br> **Default value:** `1`
+| `fontSize`           | Size of the title and routes font. Use a percentage to specify size relative to default. <br>[HTML DOM Style fontSize property](https://www.w3schools.com/jsref/prop_style_fontsize.asp) <br><br>**Type:** `string` <br> **Default value:** `100%`
 | `mapOptions`         | Map visualization options. [google.maps.MapOptions interface](https://developers.google.com/maps/documentation/javascript/reference/3/map#MapOptions) 
 
 
