@@ -11,6 +11,8 @@ Module.register("MMM-google-route", {
         fontSize:undefined
     },
 
+    getDirections: function(){/* NOP until initilized */},
+
     getScripts: function() {
         return [
             this.file('map-styles.js')
@@ -118,6 +120,8 @@ Module.register("MMM-google-route", {
 
             getDirections();
             setInterval( getDirections, 1000 * 60 * self.config.refreshPeriod );
+
+            self.getDirections = getDirections;
         };
 
         function hasMapsScript(src){
