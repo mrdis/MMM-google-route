@@ -8,7 +8,12 @@ Module.register("MMM-google-route", {
         refreshPeriod: 1,
         mapOptions:{},
         directionsRequest:{},
-        fontSize:undefined
+        fontSize:undefined,
+        listen:[]
+    },
+
+    state: {
+        overrideDestination: undefined
     },
 
     getDirections: function(){/* NOP until initilized */},
@@ -79,7 +84,7 @@ Module.register("MMM-google-route", {
             directionsDisplay1.setMap(map);
 
             function getDirections(){
-                var dr = self.config.directionsRequest;
+                var dr = Object.assign({},self.config.directionsRequest);
                 if(!dr.travelMode)
                     dr.travelMode="DRIVING";
                 if(dr.travelMode=="DRIVING"){
@@ -98,6 +103,9 @@ Module.register("MMM-google-route", {
                 }
                 if(dr.provideRouteAlternatives===undefined)
                     dr.provideRouteAlternatives=true;
+                if(self.state.overrideDestination){
+                    dr.destination = self.state.overrideDestination;
+                }
                 directionsService.route(
                     dr, 
                     function(response, status) {
@@ -194,6 +202,41 @@ Module.register("MMM-google-route", {
         }
 
         return main;
+    },
+
+    notificationReceived: function(notification, payload, sender) {
+        var override = undefined;
+        // Check if it's a desired notification
+        if(this.config.listen.indexOf(notification)>0){
+            // Let's see if we can handle it
+            if (notification === "CALENDAR_EVENTS") {
+                // Ok, we should be able to handle this
+                for (var e in payload) {
+                    var event = payload[e];
+                    if(event.location){
+                        override = { lat: event.location.lat, lng: event.location.lng };
+                    }else if(event.geo){
+                        override = { lat: event.geo.lat, lng: event.geo.lon };
+                    }
+                    if(override)break;
+    			}
+            } else {
+                Log.log(notification," notification type is not supported (yet)");
+            }
+        }
+        // Update the destination override if needed
+        if(override){
+            var o = this.state.overrideDestination;
+            if(!(override.lat == o.lat)&(override.lng == o.lng)){
+                // New override
+                this.state.overrideDestination = override;
+                this.getDirections();
+            }
+        }else if(this.state.overrideDestination){
+            // No more overrides
+            this.state.overrideDestination = undefined;
+            this.getDirections();
+        }
     }
 
 });
