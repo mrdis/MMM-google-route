@@ -9,7 +9,8 @@ Module.register("MMM-google-route", {
         useCalendarForDestination: false,
 	calendarClass: "calendar",
         mapOptions:{},
-        directionsRequest:{}
+        directionsRequest:{},
+        fontSize:undefined
     },
     
     firstEvent: false,
@@ -27,6 +28,7 @@ Module.register("MMM-google-route", {
         var title = document.createElement("div");
         title.setAttribute("id", "title");
         title.style.width="100%";
+        title.style.fontSize=this.config.fontSize;
         title.innerHTML=this.config.title;
 
         var wrapper = document.createElement("div");
@@ -167,16 +169,17 @@ Module.register("MMM-google-route", {
 
             var table = infoTable;
             var tr = document.createElement("tr");
-            var summary = document.createElement("td");
-            var distance = document.createElement("td");
-            var duration = document.createElement("td");
+            var summary = document.createElement("span");
+            var distance = document.createElement("span");
+            var duration = document.createElement("span");
 
             if(index==0){
                 tr.classList.add("bright");
             }
 
-            summary.classList.add("small");
-            distance.classList.add("small");
+            summary.style.fontSize = self.config.fontSize;
+            distance.style.fontSize = self.config.fontSize;
+            duration.style.fontSize = self.config.fontSize;
 
             var leg = response.routes[index].legs[0];
             if(leg.duration_in_traffic)
@@ -186,9 +189,15 @@ Module.register("MMM-google-route", {
             distance.innerHTML = leg.distance.text;
             summary.innerHTML = response.routes[index].summary;
 
-            tr.appendChild(duration);
-            tr.appendChild(distance);
-            tr.appendChild(summary);
+            function addCell(tr,classname,content){
+                var cell = document.createElement("td");                
+                if(classname)cell.classList.add(classname);
+                cell.appendChild(content);
+                tr.appendChild(cell);
+            }
+            addCell(tr,"",duration);
+            addCell(tr,"small",distance);
+            addCell(tr,"small",summary);
             table.appendChild(tr);
         }
 
