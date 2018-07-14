@@ -6,11 +6,15 @@ Module.register("MMM-google-route", {
         width: '300px',
         title: '',
         refreshPeriod: 1,
+        useCalendarForDestination: false,
+	calendarClass: "calendar",
         mapOptions:{},
         directionsRequest:{},
         fontSize:undefined
     },
-
+    
+    firstEvent: false,
+    
     getScripts: function() {
         return [
             this.file('map-styles.js')
@@ -57,6 +61,7 @@ Module.register("MMM-google-route", {
                 mapTypeControl:false,
                 fullscreenControl:false
             });
+            
             map.setOptions(self.config.mapOptions);
             var directionsService = new google.maps.DirectionsService;
             var directionsDisplay0 = new google.maps.DirectionsRenderer({
@@ -78,6 +83,13 @@ Module.register("MMM-google-route", {
 
             function getDirections(){
                 var dr = self.config.directionsRequest;
+                if(self.config.useCalendarForDestination && this.firstEvent){
+			if(this.firstEvent.geo){
+                    		dr.destination = {lat: this.firstEvent.geo.lat, lng: this.firstEvent.geo.lon};
+			} else if(this.firstEvent.location){
+				dr.destination = this.firstEvent.location;
+			}
+	    	}
                 if(!dr.travelMode)
                     dr.travelMode="DRIVING";
                 if(dr.travelMode=="DRIVING"){
@@ -190,6 +202,23 @@ Module.register("MMM-google-route", {
         }
 
         return main;
-    }
+    },
+    
+    notificationReceived: function(notification, payload, sender) {
+		if (notification === "CALENDAR_EVENTS") {
+			var senderClasses = sender.data.classes.toLowerCase().split(" ");
+			if (senderClasses.indexOf(this.config.calendarClass.toLowerCase()) !== -1) {
+				this.firstEvent = false;
+
+				for (var e in payload) {
+					var event = payload[e];
+					if (event.location || event.geo) {
+						this.firstEvent = event;
+						break;
+					}
+				}
+			}
+		}
+	}
 
 });
