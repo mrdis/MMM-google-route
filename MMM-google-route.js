@@ -207,20 +207,21 @@ Module.register("MMM-google-route", {
     notificationReceived: function(notification, payload, sender) {
         var override = undefined;
         // Check if it's a desired notification
-        if(this.config.listen.indexOf(notification)>=0){
-            // Let's see if we can handle it
-            if (notification === "CALENDAR_EVENTS") {
-                // Ok, we should be able to handle this
-                for (var e in payload) {
-                    var event = payload[e];
-                    if(event.location){
-                        override = event.location;
-                    }
-                    if(override)break;
-    			}
-            } else {
-                Log.log(notification," notification type is not supported (yet)");
+        if(this.config.listen.indexOf(notification)<0) return;
+
+        // Let's see if we can handle it
+        if (notification === "CALENDAR_EVENTS") {
+            // Ok, we should be able to handle this
+            for (var e in payload) {
+                var event = payload[e];
+                if(event.location){
+                    override = event.location;
+                }
+                if(override)break;
             }
+        } else {
+            Log.log(notification," notification type is not supported (yet)");
+            return;
         }
         // Update the destination override if needed
         if(override){
