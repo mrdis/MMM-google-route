@@ -207,7 +207,7 @@ Module.register("MMM-google-route", {
     notificationReceived: function(notification, payload, sender) {
         var override = undefined;
         // Check if it's a desired notification
-        if(this.config.listen.indexOf(notification)>0){
+        if(this.config.listen.indexOf(notification)>=0){
             // Let's see if we can handle it
             if (notification === "CALENDAR_EVENTS") {
                 // Ok, we should be able to handle this
