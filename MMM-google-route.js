@@ -214,9 +214,7 @@ Module.register("MMM-google-route", {
                 for (var e in payload) {
                     var event = payload[e];
                     if(event.location){
-                        override = { lat: event.location.lat, lng: event.location.lng };
-                    }else if(event.geo){
-                        override = { lat: event.geo.lat, lng: event.geo.lon };
+                        override = event.location;
                     }
                     if(override)break;
     			}
@@ -227,7 +225,7 @@ Module.register("MMM-google-route", {
         // Update the destination override if needed
         if(override){
             var o = this.state.overrideDestination;
-            if(!(override.lat == o.lat)&(override.lng == o.lng)){
+            if(JSON.stringify(this.state.overrideDestination) != JSON.stringify(override)){
                 // New override
                 this.state.overrideDestination = override;
                 this.getDirections();
