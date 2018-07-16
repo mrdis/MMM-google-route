@@ -9,7 +9,7 @@ Module.register("MMM-google-route", {
         mapOptions:{},
         directionsRequest:{},
         fontSize:undefined,
-        listen:[]
+        useCalendarForDestination: false
     },
 
     state: {
@@ -206,11 +206,9 @@ Module.register("MMM-google-route", {
 
     notificationReceived: function(notification, payload, sender) {
         var override = undefined;
-        // Check if it's a desired notification
-        if(this.config.listen.indexOf(notification)<0) return;
 
         // Let's see if we can handle it
-        if (notification === "CALENDAR_EVENTS") {
+        if (notification === "CALENDAR_EVENTS" && this.config.useCalendarForDestination) {
             // Ok, we should be able to handle this
             for (var e in payload) {
                 var event = payload[e];

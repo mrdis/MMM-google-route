@@ -38,6 +38,7 @@ var config = {
 |--------------------- |-----------
 | `key`                | *Required* Google api key. See below for help.
 | `directionsRequest`  | *Required* The directions to show on the map. [google.maps.DirectionsRequest interface](https://developers.google.com/maps/documentation/javascript/reference/3/directions#DirectionsRequest)
+| `useCalendarForDestination` | If enabled, this module will use the next calendar event's location for the destination. <br><br>**Type:** `boolean` <br> **Default value:** `false`
 | `title`              | Optional title to show above the map.
 | `height`             | Height of the map. <br><br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `width`              | Width of the map. <br><br>**Type:** `string` (pixels) <br> **Default value:** `300px`
