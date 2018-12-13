@@ -122,7 +122,6 @@ Module.register("MMM-google-route", {
 
         function hasMapsScript(src){
             for(s of document.scripts){
-                console.log(s.src);
                 if(s.src == src)return true;
             }
             return false;
