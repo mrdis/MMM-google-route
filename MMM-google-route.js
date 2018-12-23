@@ -110,7 +110,8 @@ Module.register("MMM-google-route", {
 
                             // TODO display how old the information is
                         } else {
-                            console.error('Directions request failed due to ' + status);
+                            clearInfo();
+                            addError("Google directions service status: "+status);
                         }
                     }
                 );
@@ -132,11 +133,11 @@ Module.register("MMM-google-route", {
                 try{
                     // We could get 'google is not defined' exception here if maps script has not been loaded
                     if(google && google.maps && google.maps.Map){
-                    mapsScriptLoaded();
+                        mapsScriptLoaded();
                         return;
                     }
                 }catch{}
-                    waitMapsScript();
+                waitMapsScript();
             },1000);
         }
 
@@ -189,6 +190,17 @@ Module.register("MMM-google-route", {
             addCell(tr,"",duration);
             addCell(tr,"small",distance);
             addCell(tr,"small",summary);
+            table.appendChild(tr);
+        }
+        function addError(error){
+            var table = infoTable;
+            var tr = document.createElement("tr");
+            var cell = document.createElement("td");
+            var span = document.createElement("span");
+            span.innerHTML = error;
+            cell.classList.add("small");
+            cell.appendChild(span);
+            tr.appendChild(cell);
             table.appendChild(tr);
         }
 

@@ -50,3 +50,8 @@ var config = {
 
 Obtain an api key at [Google Developer's page](https://developers.google.com/maps/documentation/javascript/).
 
+## Google directions service errors
+
+If "Google directions service status:" error message appears, it means that the request to the Google directions service failed for some reason.
+
+The list of error codes and their meanings can be found [here](https://developers.google.com/maps/documentation/javascript/directions#DirectionsStatus). 
