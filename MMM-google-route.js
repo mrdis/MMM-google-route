@@ -129,9 +129,13 @@ Module.register("MMM-google-route", {
 
         function waitMapsScript(){
             setTimeout(function(){
-                if(google && google.maps && google.maps.Map)
+                try{
+                    // We could get 'google is not defined' exception here if maps script has not been loaded
+                    if(google && google.maps && google.maps.Map){
                     mapsScriptLoaded();
-                else
+                        return;
+                    }
+                }catch{}
                     waitMapsScript();
             },1000);
         }
