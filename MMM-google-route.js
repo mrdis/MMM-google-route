@@ -77,44 +77,49 @@ Module.register("MMM-google-route", {
             directionsDisplay1.setMap(map);
 
             function getDirections(){
-                var dr = self.config.directionsRequest;
-                if(!dr.travelMode)
-                    dr.travelMode="DRIVING";
-                if(dr.travelMode=="DRIVING"){
-                    /* 
-                     * departureTime is required for directions to take traffic into account.
-                     * Also, it should be set to the current time or to a time in the future,
-                     * let's set it to 1 minute from now by default.
-                     */
-                    var defaultDepartureTime = new Date(Date.now()+60*1000);
-                    if(!dr.drivingOptions)
-                        dr.drivingOptions={};
-                    if(!dr.drivingOptions.departureTime)
-                        dr.drivingOptions.departureTime = defaultDepartureTime;
-                    if(dr.drivingOptions.departureTime < defaultDepartureTime)
-                        dr.drivingOptions.departureTime = defaultDepartureTime;
-                }
-                if(dr.provideRouteAlternatives===undefined)
-                    dr.provideRouteAlternatives=true;
-                directionsService.route(
-                    dr, 
-                    function(response, status) {
-                        if (status === 'OK') {                           
-                            directionsDisplay1.setDirections(response);
-                            directionsDisplay1.setRouteIndex(1);
-                            directionsDisplay0.setDirections(response);
-                            clearInfo();
-                            addInfo(response,0);
-                            addInfo(response,1);
-                            wrapper.style.display="block";
-
-                            // TODO display how old the information is
-                        } else {
-                            clearInfo();
-                            addError("Google directions service status: "+status);
-                        }
+                try{
+                    var dr = self.config.directionsRequest;
+                    if(!dr.travelMode)
+                        dr.travelMode="DRIVING";
+                    if(dr.travelMode=="DRIVING"){
+                        /* 
+                        * departureTime is required for directions to take traffic into account.
+                        * Also, it should be set to the current time or to a time in the future,
+                        * let's set it to 1 minute from now by default.
+                        */
+                        var defaultDepartureTime = new Date(Date.now()+60*1000);
+                        if(!dr.drivingOptions)
+                            dr.drivingOptions={};
+                        if(!dr.drivingOptions.departureTime)
+                            dr.drivingOptions.departureTime = defaultDepartureTime;
+                        if(dr.drivingOptions.departureTime < defaultDepartureTime)
+                            dr.drivingOptions.departureTime = defaultDepartureTime;
                     }
-                );
+                    if(dr.provideRouteAlternatives===undefined)
+                        dr.provideRouteAlternatives=true;
+                    directionsService.route(
+                        dr, 
+                        function(response, status) {
+                            if (status === 'OK') {                           
+                                directionsDisplay1.setDirections(response);
+                                directionsDisplay1.setRouteIndex(1);
+                                directionsDisplay0.setDirections(response);
+                                clearInfo();
+                                addInfo(response,0);
+                                addInfo(response,1);
+                                wrapper.style.display="block";
+
+                                // TODO display how old the information is
+                            } else {
+                                clearInfo();
+                                addError("Google directions service status: "+status);
+                            }
+                        }
+                    );
+                }catch(err){
+                    clearInfo();
+                    addError("getDirections failed due to "+err.name+" : "+err.message);
+                }
             }
 
             getDirections();
