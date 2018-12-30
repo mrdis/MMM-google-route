@@ -141,7 +141,7 @@ Module.register("MMM-google-route", {
                         mapsScriptLoaded();
                         return;
                     }
-                }catch{}
+                }catch(e){}
                 waitMapsScript();
             },1000);
         }
