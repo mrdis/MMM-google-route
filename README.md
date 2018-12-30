@@ -55,3 +55,9 @@ Obtain an api key at [Google Developer's page](https://developers.google.com/map
 If "Google directions service status:" error message appears, it means that the request to the Google directions service failed for some reason.
 
 The list of error codes and their meanings can be found [here](https://developers.google.com/maps/documentation/javascript/directions#DirectionsStatus). 
+
+## Importance of correct date/time settings
+
+If "Google directions service status: INVALID_REQUEST" error message appears, it could be due to an invalid setting of the current date and time on the device that is displaying the mirror interface.
+
+This is due to the `departureTime` field of the [drivingOptions](https://developers.google.com/maps/documentation/javascript/directions#DrivingOptions) field passed to the directions API being set to one minute from the current time, and google service checking that this timestamp is in the future.
