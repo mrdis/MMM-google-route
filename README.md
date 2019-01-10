@@ -36,15 +36,15 @@ var config = {
 
 | Option               | Description
 |--------------------- |-----------
-| `key`                | *Required* Google api key. See below for help.
-| `directionsRequest`  | *Required* The directions to show on the map. [google.maps.DirectionsRequest interface](https://developers.google.com/maps/documentation/javascript/reference/3/directions#DirectionsRequest)
-| `title`              | Optional title to show above the map.
-| `height`             | Height of the map. <br><br>**Type:** `string` (pixels) <br> **Default value:** `300px`
-| `width`              | Width of the map. <br><br>**Type:** `string` (pixels) <br> **Default value:** `300px`
-| `refreshPeriod`      | Period between API requests.  <br><br>**Type:** `integer` (minutes) <br> **Default value:** `1`
-| `fontSize`           | Size of the title and routes font. Use a percentage to specify size relative to default. <br>[HTML DOM Style fontSize property](https://www.w3schools.com/jsref/prop_style_fontsize.asp) <br><br>**Type:** `string` <br> **Default value:** `100%`
-| `mapOptions`         | Map visualization options. [google.maps.MapOptions interface](https://developers.google.com/maps/documentation/javascript/reference/3/map#MapOptions) 
-| `listen`             | Use destination information provided by other modules. <br>Specify the ID of the notifications to listen for. <br><br>**Type:**  `string[]` <br> **Default value:** `[]`
+| `key`                | *Required* Google api key. See below for help. <br>**Type:** `string`
+| `directionsRequest`  | *Required* The directions to show on the map. <br>**Type:** [google.maps.DirectionsRequest interface](https://developers.google.com/maps/documentation/javascript/reference/3/directions#DirectionsRequest)
+| `title`              | Optional title to show above the map. <br>**Type:** `string`
+| `height`             | Height of the map. <br>**Type:** `string` (pixels) <br> **Default value:** `300px`
+| `width`              | Width of the map. <br>**Type:** `string` (pixels) <br> **Default value:** `300px`
+| `refreshPeriod`      | Period between API requests. <br>**Type:** `integer` (minutes) <br> **Default value:** `1`
+| `fontSize`           | Size of the title and routes font. Use a percentage to specify size relative to default. <br>[HTML DOM Style fontSize property](https://www.w3schools.com/jsref/prop_style_fontsize.asp) <br>**Type:** `string` <br> **Default value:** `100%`
+| `mapOptions`         | Map visualization options. <br>**Type:** [google.maps.MapOptions interface](https://developers.google.com/maps/documentation/javascript/reference/3/map#MapOptions) 
+| `listen`             | Use destination information provided by other modules. <br>Specify the ID of the notifications to listen for. <br>**Type:**  `string[]` <br> **Default value:** `[]`
 
 
 ## Google API Key
@@ -66,3 +66,4 @@ This is due to the `departureTime` field of the [drivingOptions](https://develop
 ## Notifications supported as destination providers
 ### CALENDAR_EVENTS
 The first valid `location` field of the events contained in the notification payload will be used as destination.
+
