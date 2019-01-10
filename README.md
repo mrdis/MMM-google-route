@@ -44,6 +44,7 @@ var config = {
 | `refreshPeriod`      | Period between API requests.  <br><br>**Type:** `integer` (minutes) <br> **Default value:** `1`
 | `fontSize`           | Size of the title and routes font. Use a percentage to specify size relative to default. <br>[HTML DOM Style fontSize property](https://www.w3schools.com/jsref/prop_style_fontsize.asp) <br><br>**Type:** `string` <br> **Default value:** `100%`
 | `mapOptions`         | Map visualization options. [google.maps.MapOptions interface](https://developers.google.com/maps/documentation/javascript/reference/3/map#MapOptions) 
+| `listen`             | Use destination information provided by other modules. <br>Specify the ID of the notifications to listen for. <br><br>**Type:**  `string[]` <br> **Default value:** `[]`
 
 
 ## Google API Key
@@ -61,3 +62,7 @@ The list of error codes and their meanings can be found [here](https://developer
 If "Google directions service status: INVALID_REQUEST" error message appears, it could be due to an invalid setting of the current date and time on the device that is displaying the mirror interface.
 
 This is due to the `departureTime` field of the [drivingOptions](https://developers.google.com/maps/documentation/javascript/directions#DrivingOptions) field passed to the directions API being set to one minute from the current time, and google service checking that this timestamp is in the future.
+
+## Notifications supported as destination providers
+### CALENDAR_EVENTS
+The first valid `location` field of the events contained in the notification payload will be used as destination.
