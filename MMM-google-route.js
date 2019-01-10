@@ -8,8 +8,15 @@ Module.register("MMM-google-route", {
         refreshPeriod: 1,
         mapOptions:{},
         directionsRequest:{},
-        fontSize:undefined
+        fontSize:undefined,
+        listen:[]
     },
+
+    state: {
+        overrideDestination: undefined
+    },
+
+    getDirections: function(){/* NOP until initilized */},
 
     getScripts: function() {
         return [
@@ -78,7 +85,7 @@ Module.register("MMM-google-route", {
 
             function getDirections(){
                 try{
-                    var dr = self.config.directionsRequest;
+                    var dr = Object.assign({},self.config.directionsRequest);
                     if(!dr.travelMode)
                         dr.travelMode="DRIVING";
                     if(dr.travelMode=="DRIVING"){
@@ -97,6 +104,9 @@ Module.register("MMM-google-route", {
                     }
                     if(dr.provideRouteAlternatives===undefined)
                         dr.provideRouteAlternatives=true;
+                    if(self.state.overrideDestination){
+                        dr.destination = self.state.overrideDestination;
+                    }
                     directionsService.route(
                         dr, 
                         function(response, status) {
@@ -124,6 +134,8 @@ Module.register("MMM-google-route", {
 
             getDirections();
             setInterval( getDirections, 1000 * 60 * self.config.refreshPeriod );
+
+            self.getDirections = getDirections;
         };
 
         function hasMapsScript(src){
@@ -210,6 +222,40 @@ Module.register("MMM-google-route", {
         }
 
         return main;
+    },
+
+    notificationReceived: function(notification, payload, sender) {
+        var override = undefined;
+        // Check if it's a desired notification
+        if(this.config.listen.indexOf(notification)<0) return;
+
+        // Let's see if we can handle it
+        if (notification === "CALENDAR_EVENTS") {
+            // Ok, we should be able to handle this
+            for (var e in payload) {
+                var event = payload[e];
+                if(event.location){
+                    override = event.location;
+                }
+                if(override)break;
+            }
+        } else {
+            Log.log(notification," notification type is not supported (yet)");
+            return;
+        }
+        // Update the destination override if needed
+        if(override){
+            var o = this.state.overrideDestination;
+            if(JSON.stringify(this.state.overrideDestination) != JSON.stringify(override)){
+                // New override
+                this.state.overrideDestination = override;
+                this.getDirections();
+            }
+        }else if(this.state.overrideDestination){
+            // No more overrides
+            this.state.overrideDestination = undefined;
+            this.getDirections();
+        }
     }
 
 });
