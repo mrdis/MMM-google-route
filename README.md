@@ -63,6 +63,24 @@ If "Google directions service status: INVALID_REQUEST" error message appears, it
 
 This is due to the `departureTime` field of the [drivingOptions](https://developers.google.com/maps/documentation/javascript/directions#DrivingOptions) field passed to the directions API being set to one minute from the current time, and google service checking that this timestamp is in the future.
 
+## Using MMM-ModuleScheduler to configure the route refresh interval
+You can use the [MMM-ModuleScheduler](https://github.com/ianperrin/MMM-ModuleScheduler) module to trigger route updates using a certain schedule.<br>
+This may be useful for example to refresh the route more frequently in the morning and less frequently during the rest of the day, reducing the risk of exceeding the [query limit](https://developers.google.com/maps/documentation/directions/usage-and-billing#standard-usage-limits-and-billing) set by google.
+
+Just set "MMM-google-route/refresh" as the notification id in the `notification_schedule` [configuration parameter](https://github.com/ianperrin/MMM-ModuleScheduler#scheduling-notifications) of the module, e.g.
+```js
+    {
+        module: 'MMM-ModuleScheduler',
+        config: {
+            notification_schedule: [
+                // Refresh the route every minute from 7:00 AM to 8:00 AM, monday to friday
+                { notification: 'MMM-google-route/refresh', schedule: '* 7 * * 1-5' }
+            ]
+        }
+    },
+```
+
+
 ## Notifications supported as destination providers
 ### CALENDAR_EVENTS
 The first valid `location` field of the events contained in the notification payload will be used as destination.

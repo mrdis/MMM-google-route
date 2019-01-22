@@ -134,7 +134,7 @@ Module.register("MMM-google-route", {
 
             getDirections();
             if(self.config.refreshPeriod)
-            setInterval( getDirections, 1000 * 60 * self.config.refreshPeriod );
+                setInterval( getDirections, 1000 * 60 * self.config.refreshPeriod );
 
             self.getDirections = getDirections;
         };
@@ -226,10 +226,16 @@ Module.register("MMM-google-route", {
     },
 
     notificationReceived: function(notification, payload, sender) {
-        var override = undefined;
+        // Handle module notifications
+        if(notification === "MMM-google-route/refresh"){
+            this.getDirections();
+        }
+
         // Check if it's a desired notification
         if(this.config.listen.indexOf(notification)<0) return;
 
+        var override = undefined;
+        
         // Let's see if we can handle it
         if (notification === "CALENDAR_EVENTS") {
             // Ok, we should be able to handle this
