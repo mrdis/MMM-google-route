@@ -41,7 +41,7 @@ var config = {
 | `title`              | Optional title to show above the map. <br>**Type:** `string`
 | `height`             | Height of the map. <br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `width`              | Width of the map. <br>**Type:** `string` (pixels) <br> **Default value:** `300px`
-| `refreshPeriod`      | Period between API requests. <br>**Type:** `integer` (minutes) <br> **Default value:** `1`
+| `refreshPeriod`      | Period between API requests. Set to 0 to disable periodic refresh. <br>**Type:** `integer` (minutes) <br> **Default value:** `1`
 | `fontSize`           | Size of the title and routes font. Use a percentage to specify size relative to default. <br>[HTML DOM Style fontSize property](https://www.w3schools.com/jsref/prop_style_fontsize.asp) <br>**Type:** `string` <br> **Default value:** `100%`
 | `mapOptions`         | Map visualization options. <br>**Type:** [google.maps.MapOptions interface](https://developers.google.com/maps/documentation/javascript/reference/3/map#MapOptions) 
 | `listen`             | Use destination information provided by other modules. <br>Specify the ID of the notifications to listen for. <br>**Type:**  `string[]` <br> **Default value:** `[]`

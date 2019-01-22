@@ -133,6 +133,7 @@ Module.register("MMM-google-route", {
             }
 
             getDirections();
+            if(self.config.refreshPeriod)
             setInterval( getDirections, 1000 * 60 * self.config.refreshPeriod );
 
             self.getDirections = getDirections;
