@@ -45,6 +45,8 @@ var config = {
 | `fontSize`           | Size of the title and routes font. Use a percentage to specify size relative to default. <br>[HTML DOM Style fontSize property](https://www.w3schools.com/jsref/prop_style_fontsize.asp) <br>**Type:** `string` <br> **Default value:** `100%`
 | `mapOptions`         | Map visualization options. <br>**Type:** [google.maps.MapOptions interface](https://developers.google.com/maps/documentation/javascript/reference/3/map#MapOptions) 
 | `listen`             | Use destination information provided by other modules. <br>Specify the ID of the notifications to listen for. <br>**Type:**  `string[]` <br> **Default value:** `[]`
+| `disableMap`         | Optional: to hide map. <br>**Type:** `boolean` <br> **Default value** `false` 
+
 
 
 ## Google API Key

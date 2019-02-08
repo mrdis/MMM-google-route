@@ -9,7 +9,8 @@ Module.register("MMM-google-route", {
         mapOptions:{},
         directionsRequest:{},
         fontSize:undefined,
-        listen:[]
+		listen:[],
+		disableMap: false
     },
 
     state: {
@@ -47,8 +48,10 @@ Module.register("MMM-google-route", {
         infoTable.style.height="100%";
         infoTable.style.width="100%";
 
-        main.appendChild(title);
-        main.appendChild(wrapper);
+		main.appendChild(title);
+		if (!this.config.disableMap) {
+			main.appendChild(wrapper);
+		}
         main.appendChild(info);
         info.appendChild(infoTable);
 
