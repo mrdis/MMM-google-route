@@ -6,6 +6,7 @@ Module.register("MMM-google-route", {
         width: '300px',
         title: '',
         refreshPeriod: 1,
+        showAge: true,
         mapOptions:{},
         directionsRequest:{},
         fontSize:undefined,
@@ -14,6 +15,8 @@ Module.register("MMM-google-route", {
 
     state: {
         refreshTimer: undefined,
+        lastRefresh: undefined,
+        ageTimer: undefined,
         overrideDestination: undefined
     },
 
@@ -48,10 +51,18 @@ Module.register("MMM-google-route", {
         infoTable.style.height="100%";
         infoTable.style.width="100%";
 
+        var age =  document.createElement("div");
+        age.style.width="100%";
+        age.style.fontSize = this.config.fontSize;
+        age.style.textAlign = 'right';
+        age.classList.add('small','dimmed');
+
         main.appendChild(title);
         main.appendChild(wrapper);
         main.appendChild(info);
         info.appendChild(infoTable);
+        if(this.config.showAge)
+            main.appendChild(age);
 
         var self = this;
         function mapsScriptLoaded() {
@@ -119,8 +130,8 @@ Module.register("MMM-google-route", {
                                 addInfo(response,0);
                                 addInfo(response,1);
                                 wrapper.style.display="block";
-
-                                // TODO display how old the information is
+                                self.lastRefresh = moment(); // Should always be available as it is used by default 'clock' plugin
+                                updateAge();
                             } else {
                                 clearInfo();
                                 addError("Google directions service status: "+status);
@@ -137,6 +148,15 @@ Module.register("MMM-google-route", {
             if(self.config.refreshPeriod){
                 if(self.state.refreshTimer) clearInterval(self.state.refreshTimer);
                 self.state.refreshTimer = setInterval( getDirections, 1000 * 60 * self.config.refreshPeriod );
+            }
+
+            function updateAge() {
+                if(self.config.showAge && self.lastRefresh){
+                    age.innerHTML = self.lastRefresh.fromNow();
+                }
+            }
+            if(self.config.showAge && !self.state.ageTimer){
+                self.state.ageTimer = setInterval(updateAge,5000);
             }
 
             self.getDirections = getDirections;
