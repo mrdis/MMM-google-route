@@ -13,6 +13,7 @@ Module.register("MMM-google-route", {
     },
 
     state: {
+        refreshTimer: undefined,
         overrideDestination: undefined
     },
 
@@ -133,8 +134,10 @@ Module.register("MMM-google-route", {
             }
 
             getDirections();
-            if(self.config.refreshPeriod)
-                setInterval( getDirections, 1000 * 60 * self.config.refreshPeriod );
+            if(self.config.refreshPeriod){
+                if(self.state.refreshTimer) clearInterval(self.state.refreshTimer);
+                self.state.refreshTimer = setInterval( getDirections, 1000 * 60 * self.config.refreshPeriod );
+            }
 
             self.getDirections = getDirections;
         };
