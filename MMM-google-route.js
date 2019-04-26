@@ -252,14 +252,16 @@ Module.register("MMM-google-route", {
         // Handle module notifications
         if(notification === "MMM-google-route/refresh"){
             this.getDirections();
+            return;
         }
 
         // Check if it's a desired notification
-        if(this.config.listen.indexOf(notification)<0) return;
+        if(this.config.listen.indexOf(notification)<0) 
+            return;
 
         var override = undefined;
         
-        // Let's see if we can handle it
+        // Let's see if we can handle destination override
         if (notification === "CALENDAR_EVENTS") {
             // Ok, we should be able to handle this
             for (var e in payload) {
@@ -270,7 +272,8 @@ Module.register("MMM-google-route", {
                 if(override)break;
             }
         } else {
-            Log.log(notification," notification type is not supported (yet)");
+            // No destination override, just update the route.
+            this.getDirections();
             return;
         }
         // Update the destination override if needed
