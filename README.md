@@ -2,7 +2,7 @@
 
 ![Alt text](/screenshot.png "A preview of the MMM-google-route module.")
 
-A module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/) that displays the two best 
+A module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/) that displays the two best
 routes from an origin to a destination, using Google Directions API.
 
 ## Using the module
@@ -42,9 +42,10 @@ var config = {
 | `height`             | Height of the map. <br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `width`              | Width of the map. <br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `refreshPeriod`      | Period between API requests. Set to 0 to disable periodic refresh. <br>**Type:** `integer` (minutes) <br> **Default value:** `1`
+| `minimumRefreshPeriod` | Set a minimum period between API requests. This is useful when used in combination with `listen`.  <br>**Type:** `integer` (minutes) <br> **Default value:** `0`
 | `showAge`            | Show how long ago the routes were updated. <br>**Type:** `boolean` <br> **Default value:** `true`
 | `fontSize`           | Size of the title and routes font. Use a percentage to specify size relative to default. <br>[HTML DOM Style fontSize property](https://www.w3schools.com/jsref/prop_style_fontsize.asp) <br>**Type:** `string` <br> **Default value:** `100%`
-| `mapOptions`         | Map visualization options. <br>**Type:** [google.maps.MapOptions interface](https://developers.google.com/maps/documentation/javascript/reference/3/map#MapOptions) 
+| `mapOptions`         | Map visualization options. <br>**Type:** [google.maps.MapOptions interface](https://developers.google.com/maps/documentation/javascript/reference/3/map#MapOptions)
 | `listen`             | Refresh the route when receiving these notifications and use the location contained in the notification as destination (if available). <br>Specify the ID of the notifications to listen for. <br>**Type:**  `string[]` <br> **Default value:** `[]`
 
 
@@ -56,7 +57,7 @@ Obtain an api key at [Google Developer's page](https://developers.google.com/map
 
 If "Google directions service status:" error message appears, it means that the request to the Google directions service failed for some reason.
 
-The list of error codes and their meanings can be found [here](https://developers.google.com/maps/documentation/javascript/directions#DirectionsStatus). 
+The list of error codes and their meanings can be found [here](https://developers.google.com/maps/documentation/javascript/directions#DirectionsStatus).
 
 ## Importance of correct date/time settings
 
@@ -85,4 +86,3 @@ Just set "MMM-google-route/refresh" as the notification id in the `notification_
 ## Notifications supported as destination providers
 ### CALENDAR_EVENTS
 The first valid `location` field of the events contained in the notification payload will be used as destination.
-

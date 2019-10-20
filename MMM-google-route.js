@@ -6,6 +6,7 @@ Module.register("MMM-google-route", {
         width: '300px',
         title: '',
         refreshPeriod: 1,
+        minimumRefreshPeriod: 0,
         showAge: true,
         mapOptions:{},
         directionsRequest:{},
@@ -95,13 +96,25 @@ Module.register("MMM-google-route", {
             directionsDisplay0.setMap(map);
             directionsDisplay1.setMap(map);
 
+            var lastDirectionsTime;
+
             function getDirections(){
+                /*
+                  minimumRefreshPeriod is useful when used in combination with listened events,
+                  such as USER_PRESENCE.
+                */
+                if (
+                    self.config.minimumRefreshPeriod &&
+                    (Date.now() - lastDirectionsTime < self.config.minimumRefreshPeriod * 1000 * 60)
+                ) {
+                    return;
+                }
                 try{
                     var dr = Object.assign({},self.config.directionsRequest);
                     if(!dr.travelMode)
                         dr.travelMode="DRIVING";
                     if(dr.travelMode=="DRIVING"){
-                        /* 
+                        /*
                         * departureTime is required for directions to take traffic into account.
                         * Also, it should be set to the current time or to a time in the future,
                         * let's set it to 1 minute from now by default.
@@ -120,9 +133,9 @@ Module.register("MMM-google-route", {
                         dr.destination = self.state.overrideDestination;
                     }
                     directionsService.route(
-                        dr, 
+                        dr,
                         function(response, status) {
-                            if (status === 'OK') {                           
+                            if (status === 'OK') {
                                 directionsDisplay1.setDirections(response);
                                 directionsDisplay1.setRouteIndex(1);
                                 directionsDisplay0.setDirections(response);
@@ -142,6 +155,7 @@ Module.register("MMM-google-route", {
                     clearInfo();
                     addError("getDirections failed due to "+err.name+" : "+err.message);
                 }
+                lastDirectionsTime = Date.now();
             }
 
             getDirections();
@@ -223,7 +237,7 @@ Module.register("MMM-google-route", {
             summary.innerHTML = response.routes[index].summary;
 
             function addCell(tr,classname,content){
-                var cell = document.createElement("td");                
+                var cell = document.createElement("td");
                 if(classname)cell.classList.add(classname);
                 cell.appendChild(content);
                 tr.appendChild(cell);
@@ -256,11 +270,11 @@ Module.register("MMM-google-route", {
         }
 
         // Check if it's a desired notification
-        if(this.config.listen.indexOf(notification)<0) 
+        if(this.config.listen.indexOf(notification)<0)
             return;
 
         var override = undefined;
-        
+
         // Let's see if we can handle destination override
         if (notification === "CALENDAR_EVENTS") {
             // Ok, we should be able to handle this
