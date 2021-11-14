@@ -219,6 +219,7 @@ Module.register("MMM-google-route", {
             var summary = document.createElement("span");
             var distance = document.createElement("span");
             var duration = document.createElement("span");
+            var departure = document.createElement("span");
 
             if(index==0){
                 tr.classList.add("bright");
@@ -227,12 +228,15 @@ Module.register("MMM-google-route", {
             summary.style.fontSize = self.config.fontSize;
             distance.style.fontSize = self.config.fontSize;
             duration.style.fontSize = self.config.fontSize;
+            departure.style.fontSize = self.config.fontSize;
 
             var leg = response.routes[index].legs[0];
             if(leg.duration_in_traffic)
                 duration.innerHTML = leg.duration_in_traffic.text;
             else
                 duration.innerHTML = leg.duration.text;
+            if(leg.departure_time)
+                departure.innerHTML = leg.departure_time.text;
             distance.innerHTML = leg.distance.text;
             summary.innerHTML = response.routes[index].summary;
 
@@ -243,6 +247,7 @@ Module.register("MMM-google-route", {
                 tr.appendChild(cell);
             }
             addCell(tr,"",duration);
+            addCell(tr,"small",departure);
             addCell(tr,"small",distance);
             addCell(tr,"small",summary);
             table.appendChild(tr);
