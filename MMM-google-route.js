@@ -10,6 +10,7 @@ Module.register("MMM-google-route", {
         showAge: true,
 	showMap: true,
         mapOptions:{},
+	language: "en",
         directionsRequest:{},
         fontSize:undefined,
         listen:[]
@@ -198,7 +199,7 @@ Module.register("MMM-google-route", {
             },1000);
         }
 
-        var mapsSrc = "https://maps.googleapis.com/maps/api/js?key=" + this.config.key;
+        var mapsSrc = "https://maps.googleapis.com/maps/api/js?key=" + this.config.key + "&language=" + this.config.language;
         if(! hasMapsScript(mapsSrc)){
             var script = document.createElement("script");
             script.type = "text/javascript";
