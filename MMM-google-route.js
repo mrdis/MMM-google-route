@@ -8,6 +8,7 @@ Module.register("MMM-google-route", {
         refreshPeriod: 1,
         minimumRefreshPeriod: 0,
         showAge: true,
+	showMap: true,
         mapOptions:{},
         directionsRequest:{},
         fontSize:undefined,
@@ -59,7 +60,8 @@ Module.register("MMM-google-route", {
         age.classList.add('small','dimmed');
 
         main.appendChild(title);
-        main.appendChild(wrapper);
+	if(this.config.showMap)
+	        main.appendChild(wrapper);
         main.appendChild(info);
         info.appendChild(infoTable);
         if(this.config.showAge)
