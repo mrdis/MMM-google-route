@@ -38,12 +38,14 @@ var config = {
 |--------------------- |-----------
 | `key`                | *Required* Google api key. See below for help. <br>**Type:** `string`
 | `directionsRequest`  | *Required* The directions to show on the map. <br>**Type:** [google.maps.DirectionsRequest interface](https://developers.google.com/maps/documentation/javascript/reference/3/directions#DirectionsRequest)
+| `language`           | Directions language <br>**Type:** [`string`](https://developers.google.com/maps/faq#languagesupport) <br> **Default value:** `en`
 | `title`              | Optional title to show above the map. <br>**Type:** `string`
 | `height`             | Height of the map. <br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `width`              | Width of the map. <br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `refreshPeriod`      | Period between API requests. Set to 0 to disable periodic refresh. <br>**Type:** `integer` (minutes) <br> **Default value:** `1`
 | `minimumRefreshPeriod` | Set a minimum period between API requests. This is useful when used in combination with `listen`.  <br>**Type:** `integer` (minutes) <br> **Default value:** `0`
 | `showAge`            | Show how long ago the routes were updated. <br>**Type:** `boolean` <br> **Default value:** `true`
+| `showMap`            | Show the map. <br>**Type:** `boolean` <br> **Default value:** `true`
 | `fontSize`           | Size of the title and routes font. Use a percentage to specify size relative to default. <br>[HTML DOM Style fontSize property](https://www.w3schools.com/jsref/prop_style_fontsize.asp) <br>**Type:** `string` <br> **Default value:** `100%`
 | `mapOptions`         | Map visualization options. <br>**Type:** [google.maps.MapOptions interface](https://developers.google.com/maps/documentation/javascript/reference/3/map#MapOptions)
 | `listen`             | Refresh the route when receiving these notifications and use the location contained in the notification as destination (if available). <br>Specify the ID of the notifications to listen for. <br>**Type:**  `string[]` <br> **Default value:** `[]`
