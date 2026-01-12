@@ -42,7 +42,7 @@ var config = {
 | `title`              | Optional title to show above the map. <br>**Type:** `string`
 | `height`             | Height of the map. <br>**Type:** `string` (pixels) <br> **Default value:** `300px`
 | `width`              | Width of the map. <br>**Type:** `string` (pixels) <br> **Default value:** `300px`
-| `refreshPeriod`      | Period between API requests. Set to 0 to disable periodic refresh. <br>**Type:** `integer` (minutes) <br> **Default value:** `1`
+| `refreshPeriod`      | Period between API requests. Set to 0 to disable periodic refresh. <br>**Type:** `integer` (minutes) <br> **Default value:** `5`
 | `minimumRefreshPeriod` | Set a minimum period between API requests. This is useful when used in combination with `listen`.  <br>**Type:** `integer` (minutes) <br> **Default value:** `0`
 | `showAge`            | Show how long ago the routes were updated. <br>**Type:** `boolean` <br> **Default value:** `true`
 | `showMap`            | Show the map. <br>**Type:** `boolean` <br> **Default value:** `true`
