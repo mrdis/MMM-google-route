@@ -5,7 +5,7 @@ Module.register("MMM-google-route", {
         height: '300px',
         width: '300px',
         title: '',
-        refreshPeriod: 5,
+        refreshPeriod: 10,
         minimumRefreshPeriod: 0,
         showAge: true,
 	showMap: true,
