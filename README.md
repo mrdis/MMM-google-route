@@ -55,6 +55,14 @@ var config = {
 
 Obtain an api key at [Google Developer's page](https://developers.google.com/maps/documentation/javascript/).
 
+## !!! AVOIDING COSTS !!!
+
+Google has a limit of 5000 free API requests per month, exceeding requests will be billed (see [Issue #39](https://github.com/mrdis/MMM-google-route/issues/39)).
+
+In order to avoid costs, you can setup a quota on [Google cloud console](https://console.cloud.google.com/google/maps-apis/quotas).
+
+You should select "Directions API" menu, and set "Request per day" quota to a suitable value (e.g. 161 for limiting to less than 5000 requests per month).
+
 ## Google directions service errors
 
 If "Google directions service status:" error message appears, it means that the request to the Google directions service failed for some reason.
